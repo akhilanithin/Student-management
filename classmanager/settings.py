@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 # from pathlib import Path
 import os
 
-import dj_database_url
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR,"template")
@@ -26,20 +24,12 @@ MEDIA_DIR = os.path.join(BASE_DIR,'media')
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
-SECRET_KEY = os.environ.get("SECRET_KEY")
-
-# SECRET_KEY = 'django-insecure-jb55nczc!#2+)8g@5k9feeuka@z1o!ay)kc-6!qg7pk9$5pq$m'
+SECRET_KEY = 'django-insecure-jb55nczc!#2+)8g@5k9feeuka@z1o!ay)kc-6!qg7pk9$5pq$m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
-# DEBUG = True
-
-DEBUG = os.environ.get("DEBUG") != "False"
-
-# ALLOWED_HOSTS = []
-
-ALLOWED_HOSTS = [".vercel.app", ".now.sh"]
+ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'classroom.User'
 
@@ -55,8 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'classroom',
     'bootstrap4',
-    "whitenoise.runserver_nostatic"
-     # Other apps ....
 ]
 
 MIDDLEWARE = [
@@ -67,8 +55,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    # other apps ...
 ]
 
 ROOT_URLCONF = 'classmanager.urls'
@@ -95,20 +81,11 @@ WSGI_APPLICATION = 'classmanager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.environ.get("DATABASE_URL"),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 
@@ -158,6 +135,4 @@ STATICFILES_DIRS = [STATIC_DIR,]
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles", "static")
 
